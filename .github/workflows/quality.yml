@@ -29,3 +29,42 @@ jobs:
         run: python scripts/validate_academy.py
       - name: Run executable lab smoke tests
         run: python scripts/run_smoke_tests.py
+
+  production-container:
+    name: Build and boot production boss container
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Build image
+        run: docker build -t automation-boss labs/production_boss_fight
+      - name: Start container
+        run: docker run -d --name automation-boss -p 8088:8088 automation-boss
+      - name: Verify health endpoint
+        run: |
+          python - <<'PY'
+          import json
+          import time
+          import urllib.request
+
+          last_error = None
+          for _ in range(20):
+              try:
+                  with urllib.request.urlopen("http://127.0.0.1:8088/health", timeout=2) as response:
+                      body = json.loads(response.read())
+                      assert response.status == 200, response.status
+                      assert body["status"] == "ok", body
+                      print("CONTAINER HEALTH: PASS")
+                      break
+              except Exception as exc:
+                  last_error = exc
+                  time.sleep(0.5)
+          else:
+              raise SystemExit(f"container never became healthy: {last_error}")
+          PY
+      - name: Clean up container
+        if: always()
+        run: docker rm -f automation-boss || true
