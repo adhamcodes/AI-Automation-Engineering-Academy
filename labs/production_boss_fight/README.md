@@ -1,6 +1,6 @@
 # Production Reliability Boss Fight
 
-This is a real production-reliability gate with two independent checks: live HTTP fault injection and durable-state evaluation.
+This is a real production-reliability gate with three independent checks: live HTTP fault injection, durable-state evaluation, and a buildable container.
 
 ## Part 1 — Live service failures
 
@@ -42,8 +42,19 @@ The evaluator creates fresh `Processor` instances against the same state path an
 - new events continue correctly from durable state,
 - an empty event ID is rejected explicitly.
 
+## Part 3 — Container boundary
+
+A Dockerfile is provided and the academy CI builds it, boots it, and probes `/health` on every change.
+
+Run the same boundary locally:
+
+```bash
+docker build -t automation-boss .
+docker run --rm -p 8088:8088 automation-boss
+```
+
+Then open `http://127.0.0.1:8088/health` or run the fault injector from another terminal.
+
 ## Pass condition
 
-Pass both the HTTP fault run and the restart/idempotency evaluator, then document the failure mode, repair, state model, recovery behavior, and remaining production risks.
-
-Optional extension: containerize the service and repeat the live fault run after a real container restart.
+Pass the HTTP fault run and restart/idempotency evaluator, prove the container health check, then document the failure mode, repair, state model, recovery behavior, and remaining production risks.
