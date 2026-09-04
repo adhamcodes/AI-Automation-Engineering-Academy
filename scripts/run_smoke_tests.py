@@ -11,6 +11,7 @@ TESTS = [
     ROOT / "labs/ai_eval_lab/test_evaluator.py",
 ]
 COMPILE_ONLY = [
+    ROOT / "labs/http_api_lab/webhook_sender.py",
     ROOT / "labs/idempotency_lab/broken_processor.py",
     ROOT / "labs/idempotency_lab/evaluator.py",
     ROOT / "labs/agent_lab/broken_agent.py",
