@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 import json
+import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 processed: set[str] = set()
+HOST = os.getenv("HOST", "127.0.0.1")
+PORT = int(os.getenv("PORT", "8088"))
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -46,5 +49,5 @@ class Handler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    print("Boss-fight service listening on http://127.0.0.1:8088")
-    ThreadingHTTPServer(("127.0.0.1", 8088), Handler).serve_forever()
+    print(f"Boss-fight service listening on http://{HOST}:{PORT}")
+    ThreadingHTTPServer((HOST, PORT), Handler).serve_forever()
