@@ -16,13 +16,43 @@ COMPILE_ONLY = [
     ROOT / "labs/idempotency_lab/evaluator.py",
     ROOT / "labs/agent_lab/broken_agent.py",
     ROOT / "labs/agent_lab/evaluator.py",
+    ROOT / "labs/production_boss_fight/broken_processor.py",
+    ROOT / "labs/production_boss_fight/evaluator.py",
     ROOT / "labs/production_boss_fight/service.py",
     ROOT / "labs/production_boss_fight/fault_injector.py",
+]
+EXPECTED_REJECTIONS = [
+    (
+        ROOT / "labs/idempotency_lab/evaluator.py",
+        ROOT / "labs/idempotency_lab/broken_processor.py",
+    ),
+    (
+        ROOT / "labs/agent_lab/evaluator.py",
+        ROOT / "labs/agent_lab/broken_agent.py",
+    ),
+    (
+        ROOT / "labs/production_boss_fight/evaluator.py",
+        ROOT / "labs/production_boss_fight/broken_processor.py",
+    ),
 ]
 
 for test in TESTS:
     subprocess.run([sys.executable, test.name], cwd=test.parent, check=True)
+
 for source in COMPILE_ONLY:
     subprocess.run([sys.executable, "-m", "py_compile", str(source)], check=True)
+
+for evaluator, broken_target in EXPECTED_REJECTIONS:
+    result = subprocess.run(
+        [sys.executable, evaluator.name, broken_target.name],
+        cwd=evaluator.parent,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode == 0:
+        raise RuntimeError(f"Evaluator incorrectly accepted known-broken target: {broken_target}")
+    print(f"EXPECTED REJECTION: {broken_target.relative_to(ROOT)}")
+
 subprocess.run([sys.executable, str(ROOT / "scripts/validate_n8n_workflows.py")], check=True)
 print("LAB SMOKE TESTS: PASS")
