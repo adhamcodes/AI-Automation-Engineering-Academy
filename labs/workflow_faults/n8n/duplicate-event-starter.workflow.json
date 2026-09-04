@@ -1,0 +1,43 @@
+{
+  "name": "Academy - Duplicate Event Starter",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "id": "8f6de3cd-66e1-4ca0-8b16-c65532dc9f43",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  { json: { event_id: 'evt-100', customer: 'Ada', amount: 10 } },\n  { json: { event_id: 'evt-100', customer: 'Ada', amount: 10 } },\n  { json: { event_id: 'evt-101', customer: 'Linus', amount: 20 } }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [240, 0],
+      "id": "f8884329-923b-4ed5-8e26-2774dc16bb22",
+      "name": "Generate duplicate events"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Generate duplicate events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "baea0e7f-5da1-4ac3-8663-0c49bcad5267",
+  "tags": []
+}
