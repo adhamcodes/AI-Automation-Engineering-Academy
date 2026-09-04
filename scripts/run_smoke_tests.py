@@ -24,4 +24,5 @@ for test in TESTS:
     subprocess.run([sys.executable, test.name], cwd=test.parent, check=True)
 for source in COMPILE_ONLY:
     subprocess.run([sys.executable, "-m", "py_compile", str(source)], check=True)
+subprocess.run([sys.executable, str(ROOT / "scripts/validate_n8n_workflows.py")], check=True)
 print("LAB SMOKE TESTS: PASS")
