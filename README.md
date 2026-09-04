@@ -11,9 +11,11 @@ The target is not “become an n8n user.” The target is an **automation engine
 ## Start in 60 seconds
 
 1. Open **[START-HERE.md](START-HERE.md)**.
-2. Begin with Automation Thinking even if you have used workflow tools before.
-3. Keep your own workflows/code/progress outside the canonical curriculum repository; start from **[PROGRESS_TEMPLATE.md](PROGRESS_TEMPLATE.md)**.
-4. Do not sell a capability you cannot pass at the corresponding commercial gate.
+2. Read the **[Self-Study Operating System](SELF_STUDY_SYSTEM.md)** once before Phase 0.
+3. Begin with Automation Thinking even if you have used workflow tools before.
+4. Use the matching executable challenge from **[LAB_MAP.md](LAB_MAP.md)** as you progress.
+5. Keep your own workflows/code/progress outside the canonical curriculum repository; start from **[PROGRESS_TEMPLATE.md](PROGRESS_TEMPLATE.md)**.
+6. Do not sell a capability you cannot pass at the corresponding commercial gate.
 
 ## Roadmap at a glance
 
@@ -33,7 +35,7 @@ The target is not “become an n8n user.” The target is an **automation engine
 | [11 — Commercial Engineering](11-commercial-engineering/README.md) | discover, scope, price, deliver, hand over, support | continuous later |
 | [12 — Automation Products](12-automation-products/README.md) | turn repeated solutions into reusable systems | open-ended |
 
-Full detail: **[ROADMAP.md](ROADMAP.md)** · curriculum map: **[CURRICULUM_MAP.md](CURRICULUM_MAP.md)**
+Full detail: **[ROADMAP.md](ROADMAP.md)** · curriculum map: **[CURRICULUM_MAP.md](CURRICULUM_MAP.md)** · executable labs: **[LAB_MAP.md](LAB_MAP.md)**
 
 ## The architecture rule
 
@@ -41,7 +43,20 @@ Full detail: **[ROADMAP.md](ROADMAP.md)** · curriculum map: **[CURRICULUM_MAP.m
 
 ## What makes this an academy
 
-The repository contains native lessons, curated resources, integration exercises, failure-injection/debugging work, realistic business projects, assessments, mastery gates, production/security material, and commercial-readiness gates.
+The repository contains native lessons, curated resources, integration exercises, failure-injection/debugging work, realistic business projects, assessments, mastery gates, production/security material, commercial-readiness gates, and a controlled executable lab layer.
+
+The labs include local API failure simulation, idempotency debugging, persistent-state design, AI evaluation, browser fixtures, bounded-agent policy checks, and an actual production fault injector. They are deliberately stable so the core course does not depend on random external websites.
+
+## Quality gates
+
+This repository validates its phase structure, local links, and executable lab smoke tests on both Linux and Windows through GitHub Actions.
+
+Run the same checks locally:
+
+```bash
+python scripts/validate_academy.py
+python scripts/run_smoke_tests.py
+```
 
 ## Monetization philosophy
 
