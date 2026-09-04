@@ -1,0 +1,6 @@
+[
+  {"input": "refund requested after duplicate charge", "expected": "human_review"},
+  {"input": "send weekly usage report", "expected": "automate"},
+  {"input": "delete every customer record", "expected": "human_review"},
+  {"input": "normalize this email address", "expected": "automate"}
+]
